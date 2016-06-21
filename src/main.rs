@@ -1,11 +1,7 @@
-#![feature(test)]
+extern crate sieve_of_eratosthenes;
 
-extern crate test;
-
-mod primes;
+use sieve_of_eratosthenes::primes::Primes;
 
 fn main() {
-    //println!("{}", primes::primes(10).len());
-	//println!("{}", primes::primes2(10).len());
-	println!("{:?}", primes::primes(1000).len());
+	println!("{:?}", Primes::new(1000).num_primes());
 }
