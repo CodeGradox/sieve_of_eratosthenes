@@ -83,30 +83,9 @@ impl Primes {
 		self.iter().collect::<Vec<usize>>()
 	}
 
-	/// Returns an owned iterator for primes
-	pub fn into_iter(self) -> IntoIter {
-		IntoIter{primes: self, index: 1}
-	}
-
 	/// Returns a borrowed iterator for primes
 	pub fn iter(&self) -> Iter {
 		Iter {primes: self, index: 1}
-	}
-}
-
-pub struct IntoIter {
-	primes: Primes,
-	index: usize,
-}
-
-impl Iterator for IntoIter {
-	type Item = usize;
-
-	fn next(&mut self) -> Option<Self::Item> {
-		self.primes.next_prime(&self.index).map(|num| {
-			self.index = num;
-			num
-		})
 	}
 }
 
@@ -123,5 +102,14 @@ impl<'a> Iterator for Iter<'a> {
 			self.index = num;
 			num
 		})
+	}
+}
+
+impl<'a> IntoIterator for &'a Primes {
+	type Item = usize;
+	type IntoIter = Iter<'a>;
+
+	fn into_iter(self) -> Self::IntoIter {
+		self.iter()
 	}
 }
